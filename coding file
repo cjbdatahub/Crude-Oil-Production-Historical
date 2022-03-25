@@ -1,0 +1,45 @@
+*Shows Total Production 1971-2017, ordered by country.*/
+
+SELECT Country_Code, SUM(Toe_Thousands) AS Total_Production FROM Oil_Production_Crude_By_Year
+GROUP BY Country_Code
+ORDER BY Country_Code;
+
+/*Shows Countries without production for each country 1971-2017. ordered by country.*/
+
+SELECT Country_Code, SUM(Toe_Thousands) AS Total_Production FROM Oil_Production_Crude_By_Year
+WHERE Toe_Thousands = 0
+GROUP BY Country_Code
+ORDER BY Country_Code;
+
+/* Shows Countries that produced oil 1971-2017, ordered by total production descending.*/
+
+SELECT Country_Code, SUM(Toe_Thousands) AS Total_Production FROM Oil_Production_Crude_By_Year
+WHERE Toe_Thousands >0
+GROUP BY Country_Code
+ORDER BY Total_Production DESC;
+
+/*Shows Countries that produced oil 1971-2017, ordered by total production ascending. */
+
+SELECT DBO.Oil_Production_Crude_By_Year.Country_Code, ROUND(SUM(DBO.Oil_Production_Crude_By_Year.Toe_Thousands), 2, 1) AS Total_Production FROM Oil_Production_Crude_By_Year
+WHERE Toe_Thousands >0
+GROUP BY Country_Code
+ORDER BY Total_Production ASC;
+
+
+INNER JOIN of country name
+
+SELECT DBO.Oil_Production_Crude_By_Year.Country_Code, ROUND(SUM(DBO.Oil_Production_Crude_By_Year.Toe_Thousands), 2, 1) AS Total_Production FROM Oil_Production_Crude_By_Year 
+INNER JOIN DBO.Country_Codes
+ON Dbo.Oil_Production_Crude_By_Year.Country_Code = Country_Codes.Country_Name
+WHERE Toe_Thousands >0
+GROUP BY Country_Code
+ORDER BY Total_Production ASC;
+
+RENAMED 
+
+EXEC sp_rename 'dbo.Country_Codes', 'ISO_Codes'
+
+1b. 
+SELECT Country_Code, SUM(Toe_Thousands) AS Total_Production FROM Oil_Production_Crude_By_Year
+GROUP BY Country_Code 
+ORDER BY Country_Code
